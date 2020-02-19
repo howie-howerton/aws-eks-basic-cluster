@@ -11,29 +11,33 @@ It will create:
 - 2 public subnets and associated route table
 - 2 private subnets and associated route table
 - An EKS cluster with 2 worker nodes.
+- An Ubuntu-based Bastion Host
 
 
-The template has a local-exec provisioner that will take care of configuring kubectl (~/.kube/config) to access the cluster.
+The template has a local-exec provisioner that will take care of configuring kubectl (~/.kube/config) in order to access the cluster from your local MBP/Linux workstation.
 
 In the event that controlling the EKS cluster from your local MBP/Linux workstation isn't ideal, an EC2 Ubuntu-based instance is also created and initialized for you.
 
 # AWS Pre-Requisites
-- AWS IAM User Account (with permissions to create EKS and EC2 resources) + Access Keys
+- An AWS IAM User Account (with permissions to create EKS and EC2 resources) + Access Keys
 - An AWS EC2 Key pair 
 
 # Local MBP/Linux workstation Pre-Requisites
-- git               (brew install git)
-- terraform v0.12+  (brew install terraform)
-- awscli v1.16.308+ (brew install awscli)
-- kubectl v1.15+    (brew install kubectl)
-- helm v3.0+        (brew install helm)
+- git               
+- terraform v0.12+  
+- awscli v1.16.308+ 
+- kubectl v1.15+    
+- helm v3.0+        
+On a MBP, you can easily install all of these pre-requisites with:
+```
+brew install git terraform awscli kubectl helm
+```
 
 # Usage
 1. Clone this repository
 ```
 git clone https://github.com/howie-howerton/aws-eks-basic-cluster.git
 ```
-
 2. Edit the variables in the sample 'terraform.tfvars.changeme' file to suit your AWS environment
 
 3. Remove the '.changeme' extension from terraform.tfvars.changeme so that the filename reads as: terraform.tfvars
@@ -46,18 +50,17 @@ terraform init
 ```
 terraform apply
 ```
-This process typically takes 10-15 minutes.
+   This process typically takes 10-15 minutes.
 
 6. Review the resources that will be created by the template and type "yes" to proceed.
-
-Once the template completes creating all resources, you should be able to use kubectl to manage your new cluster.
+   Once the template completes creating all resources, you should be able to use kubectl to manage your new cluster.
 ```
 kubectl cluster-info
 ```
 ```
 kubectl get nodes
 ```
-Note: If the output of the above command is "No resources found.", run the following command:
+   Note: If the output of the above command is "No resources found.", run the following command:
 ```
 kubectly apply -f config_map.yaml
 ```
@@ -66,4 +69,4 @@ After you've finished with your cluster, you can destroy/delete it (to keep your
 ```
 terraform destroy -auto-approve
 ```
-This process typically takes 10-15 minutes.
+   This process typically takes 10-15 minutes.
