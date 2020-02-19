@@ -42,7 +42,7 @@ resource "aws_iam_role_policy_attachment" "demo-node-AmazonEC2ContainerRegistryR
 }
 
 resource "aws_iam_instance_profile" "demo-node" {
-  name = "${var.tag_prefix}-instance-profile" 
+  name = "${var.tag_prefix}-instance-profile"
   role = "${aws_iam_role.demo-node.name}"
 }
 
@@ -60,8 +60,8 @@ resource "aws_security_group" "demo-node" {
 
   tags = "${
     map(
-     "Name", "${var.tag_prefix}-worker-node-sg",
-     "kubernetes.io/cluster/${var.cluster_name}", "owned",
+      "Name", "${var.tag_prefix}-worker-node-sg",
+      "kubernetes.io/cluster/${var.cluster_name}", "owned",
     )
   }"
 }
@@ -141,7 +141,7 @@ resource "aws_autoscaling_group" "demo" {
   max_size             = 2
   min_size             = 1
   name                 = "${var.tag_prefix}-eks-worker-node"
-  vpc_zone_identifier  = ["${aws_subnet.demo_public1_subnet.id}","${aws_subnet.demo_public2_subnet.id}"]
+  vpc_zone_identifier  = ["${aws_subnet.demo_public1_subnet.id}", "${aws_subnet.demo_public2_subnet.id}"]
 
   tag {
     key                 = "Name"
@@ -155,7 +155,7 @@ resource "aws_autoscaling_group" "demo" {
     propagate_at_launch = true
   }
 
-  
+
 }
 
 
@@ -206,13 +206,5 @@ users:
         - "-i"
         - "${var.cluster_name}"
 KUBECONFIG
-}
-
-output "config_map_aws_auth" {
-  value = "${local.config_map_aws_auth}"
-}
-
-output "kubeconfig" {
-  value = "${local.kubeconfig}"
 }
 

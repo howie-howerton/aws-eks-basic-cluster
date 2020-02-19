@@ -1,4 +1,4 @@
 terraform.tfvars
 todo.txt
-.terraform
+.terraform*
 terraform.tfstate*

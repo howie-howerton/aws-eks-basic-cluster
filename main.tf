@@ -1,6 +1,7 @@
 provider "aws" {
-  region  = "${var.aws_region}"
-  profile = "${var.aws_profile}"
+  region     = "${var.aws_region}"
+  access_key = "${var.aws_access_key_id}"
+  secret_key = "${var.aws_secret_access_key}"
 }
 
 #----- Data Sources -----
@@ -35,7 +36,7 @@ resource "aws_internet_gateway" "demo_internet_gateway" {
 
 # EIP and NAT Gateway
 resource "aws_eip" "ngw_eip" {
-vpc = true
+  vpc = true
 }
 resource "aws_nat_gateway" "demo_nat_gateway" {
   allocation_id = "${aws_eip.ngw_eip.id}"
@@ -64,9 +65,8 @@ resource "aws_route_table" "demo_public_rt" {
 
 resource "aws_default_route_table" "demo_private_rt" {
   default_route_table_id = "${aws_vpc.demo_vpc.default_route_table_id}"
-  #vpc_id = "${aws_vpc.demo_vpc.id}"
   route {
-    cidr_block = "0.0.0.0/0"
+    cidr_block     = "0.0.0.0/0"
     nat_gateway_id = "${aws_nat_gateway.demo_nat_gateway.id}"
   }
 
@@ -126,16 +126,6 @@ resource "aws_subnet" "demo_private2_subnet" {
       "kubernetes.io/cluster/${var.cluster_name}", "shared",
     )
   }"
-}
-
-
-# Subnet Group (for RDS)
-resource "aws_db_subnet_group" "db_subnet_group" {
-  name       = "${var.tag_prefix}_db_subnet_group"
-  subnet_ids = ["${aws_subnet.demo_private1_subnet.id}", "${aws_subnet.demo_private2_subnet.id}"]
-  tags = {
-    Name = "${var.tag_prefix}_db_subnet_group"
-  }
 }
 
 

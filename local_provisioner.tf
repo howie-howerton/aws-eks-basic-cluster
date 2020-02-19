@@ -1,6 +1,6 @@
 resource "null_resource" "local_mac_provisioner" {
-    provisioner "local-exec" {
-        command = <<EOT
+  provisioner "local-exec" {
+    command = <<EOT
         echo "################################################################################"
         echo "# Running local provisioner"
         echo "################################################################################"
@@ -12,5 +12,5 @@ resource "null_resource" "local_mac_provisioner" {
         EOT
   }
 
-  depends_on                  = ["aws_eks_cluster.demo", "aws_launch_configuration.demo"]
+  depends_on = ["aws_eks_cluster.demo", "aws_launch_configuration.demo", "aws_autoscaling_group.demo"]
 }

@@ -19,7 +19,6 @@ variable "tag_prefix" {
   default     = "demo"
 }
 variable "key_name" {}
-variable "key_path" {}
 variable "cluster_name" {
   description = "EKS cluster name."
   default     = "eks_basic_demo"

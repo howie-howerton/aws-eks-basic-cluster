@@ -67,12 +67,12 @@ resource "aws_security_group_rule" "demo-cluster-ingress-node-https" {
 
 resource "aws_security_group_rule" "demo-cluster-ingress-bastion-https" {
   source_security_group_id = "${aws_security_group.bastion.id}"
-  description       = "Allow bastion to communicate with the cluster API Server"
-  from_port         = 443
-  protocol          = "tcp"
-  security_group_id = "${aws_security_group.demo-cluster.id}"
-  to_port           = 443
-  type              = "ingress"
+  description              = "Allow bastion to communicate with the cluster API Server"
+  from_port                = 443
+  protocol                 = "tcp"
+  security_group_id        = "${aws_security_group.demo-cluster.id}"
+  to_port                  = 443
+  type                     = "ingress"
 }
 
 resource "aws_security_group_rule" "demo-cluster-ingress-workstation-https" {
@@ -90,7 +90,7 @@ resource "aws_eks_cluster" "demo" {
   role_arn = "${aws_iam_role.demo-cluster.arn}"
   vpc_config {
     security_group_ids = ["${aws_security_group.demo-cluster.id}"]
-    subnet_ids         = ["${aws_subnet.demo_public1_subnet.id}","${aws_subnet.demo_public2_subnet.id}"]
+    subnet_ids         = ["${aws_subnet.demo_public1_subnet.id}", "${aws_subnet.demo_public2_subnet.id}"]
   }
   depends_on = [
     "aws_iam_role_policy_attachment.demo-cluster-AmazonEKSClusterPolicy",

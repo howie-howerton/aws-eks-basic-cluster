@@ -1,11 +1,9 @@
-
-
 data "template_file" "bastion_user_data" {
   template = "${file("bastion-user-data.sh")}"
 
   vars = {
-    config_map_aws_auth = "${local.config_map_aws_auth}"
-    aws_access_key_id   = "${var.aws_access_key_id}"
+    config_map_aws_auth   = "${local.config_map_aws_auth}"
+    aws_access_key_id     = "${var.aws_access_key_id}"
     aws_secret_access_key = "${var.aws_secret_access_key}"
     cluster_name          = "${var.cluster_name}"
     region                = "${var.aws_region}"
