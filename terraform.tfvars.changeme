@@ -1,0 +1,16 @@
+aws_profile = "default"
+aws_region  = "us-east-1"
+vpc_cidr    = "10.1.0.0/16"
+cidrs = {
+  PublicSubnet01  = "10.1.1.0/24"
+  PublicSubnet02  = "10.1.2.0/24"
+  PrivateSubnet01 = "10.1.3.0/24"
+  PrivateSubnet02 = "10.1.4.0/24"
+}
+tag_prefix             = "eks_demo"
+key_name               = "your-key-name-here"
+key_path               = "/path/to/your/public/key/here.pem"
+cluster_name           = "eks_basic_cluster"
+admin_ip               = ["75.190.253.61/32", "174.71.138.112/28"]   #NOT CURRENTLY USED .. looking up public ip of workstation instead
+aws_access_key_id      = "your-access-key-here"
+aws_secret_access_key  = "your-secret-access-key-here"
