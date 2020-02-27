@@ -1,0 +1,49 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: struts-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: struts-demo
+  template:
+    metadata:
+      labels:
+        app:  struts-demo
+    spec:
+      containers:
+      - name: struts
+        image: howiehowerton/java-struts2-cve-2018-11776
+        #image: jrrdev/cve-2017-5638     # A vulnerable Struts 2 image
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: struts-attacker
+spec:
+  containers:
+    - name: struts-attacker
+      image: howiehowerton/struts_attacker  # A small Ubuntu-based image that contains sample exploit scripts.
+# Once this pod is deployed, use the following command to log into a shell:
+#     kubectl exec -it struts-attacker -- /bin/bash
+#
+# Sample exploit scripts can be found in the default directory (Hint:  Just use 'ls' after exec-ing into the pod.)
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: struts-demo-svc
+  labels:
+    app: struts-demo
+spec:
+  type: ClusterIP
+  ports:
+  - port: 8080
+    protocol: TCP
+  selector:
+    app: struts-demo
+...
