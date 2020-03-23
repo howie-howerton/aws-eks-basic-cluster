@@ -85,7 +85,8 @@ resource "aws_subnet" "demo_public1_subnet" {
   availability_zone       = "${data.aws_availability_zones.available.names[0]}"
 
   tags = {
-    Name = "${var.tag_prefix}_PublicSubnet01"
+    Name = "${var.tag_prefix}_PublicSubnet01",
+    "kubernetes.io/role/elb" = "1"
   }
 }
 
@@ -96,7 +97,8 @@ resource "aws_subnet" "demo_public2_subnet" {
   availability_zone       = "${data.aws_availability_zones.available.names[1]}"
 
   tags = {
-    Name = "${var.tag_prefix}_PublicSubnet02"
+    Name = "${var.tag_prefix}_PublicSubnet02",
+    "kubernetes.io/role/elb" = "1"
   }
 }
 

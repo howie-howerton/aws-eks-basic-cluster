@@ -1,0 +1,37 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dvwa
+spec:
+  selector:
+    matchLabels:
+      app: dvwa
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: dvwa
+    spec:
+      containers:
+      - name: dvwa
+        image: vulnerables/web-dvwa:latest
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dvwa-svc
+  labels:
+    app: dvwa
+spec:
+  type: NodePort
+  ports:
+    - nodePort: 30088
+      port: 80
+      protocol: TCP
+      targetPort: 80  
+  selector:
+    app: dvwa
+...
