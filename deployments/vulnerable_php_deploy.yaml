@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: php
-        image: howiehowerton/vulnerable_php
+        image: howiehowerton/vulnerable_php:v2
         ports:
         - containerPort: 80
 ---

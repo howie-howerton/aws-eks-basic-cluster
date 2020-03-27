@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: php
-        image: howiehowerton/vulnerable_php
+        image: howiehowerton/vulnerable_php:v2
         ports:
         - containerPort: 80
 ---
@@ -28,7 +28,7 @@ metadata:
 spec:
   type: NodePort
   ports:
-    - nodePort: 30080
+    - nodePort: 30002
       port: 80
       protocol: TCP
       targetPort: 80  
